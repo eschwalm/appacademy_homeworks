@@ -15,3 +15,21 @@ class Stack
     @stack
   end
 end
+
+class Queue
+  def initialize
+    @queue = []
+  end
+
+  def add(el)
+    @queue.unshift(el)
+  end
+
+  def remove
+    @queue.pop
+  end
+
+  def show
+    @queue
+  end
+end
