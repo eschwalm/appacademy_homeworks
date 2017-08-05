@@ -4,38 +4,69 @@ class Simon
   attr_accessor :sequence_length, :game_over, :seq
 
   def initialize
-
+    @sequence_length = 1
+    @game_over = false
+    @seq = []
   end
 
   def play
-
+    until @game_over
+      take_turn
+      system('clear')
+    end
+    game_over_message
+    reset_game
   end
 
   def take_turn
-
+    unless @game_over
+      show_sequence
+      require_sequence
+      round_success_message
+      @sequence_length += 1
+    end
   end
 
   def show_sequence
-
+    add_random_color
+    @seq.each do |color|
+      puts color
+      sleep(1)
+      system("clear")
+      sleep(0.5)
+    end
   end
 
   def require_sequence
-
+    @sequence_length.times do |i|
+      answer = gets.chomp
+      if answer != seq[i]
+        @game_over = true
+        break
+      end
+    end
   end
 
   def add_random_color
-
+    seq << COLORS.sample
   end
 
   def round_success_message
-
+    puts "Round complete!"
   end
 
   def game_over_message
-
+    puts "You lost!"
   end
 
   def reset_game
-
+    @sequence_length = 1
+    @seq = []
+    @game_over = false
   end
+end
+
+if __FILE__ == $PROGRAM_NAME
+  game = Simon.new
+  game.play
 end
