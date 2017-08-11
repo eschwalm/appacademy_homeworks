@@ -29,7 +29,7 @@ class LRUCache
 
   # helper methods go here!
   def full?
-    @cache.count >= size
+    @cache.count >= @size
   end
 
   def discard
