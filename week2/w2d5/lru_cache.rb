@@ -11,10 +11,10 @@ class LRUCache
 
   def add(el)
     # adds element to cache according to LRU principle
-    if full?
-      discard
-    elsif @cache.include?(el)
+    if @cache.include?(el)
       @cache.delete(el)
+    elsif full?
+      discard
     end
     @cache.push(el)
   end
