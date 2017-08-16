@@ -164,7 +164,14 @@ def haymarket_and_leith
   # Give the company and num of the services that connect stops
   # 115 and 137 ('Haymarket' and 'Leith')
   execute(<<-SQL)
-
+    SELECT DISTINCT
+      a.company, a.num
+    FROM
+      routes a
+    INNER JOIN
+      routes b ON (a.num = b.num AND a.company = b.company)
+    WHERE
+      a.stop_id = 115 AND b.stop_id = 137
   SQL
 end
 
@@ -172,6 +179,18 @@ def craiglockhart_and_tollcross
   # Give the company and num of the services that connect stops
   # 'Craiglockhart' and 'Tollcross'
   execute(<<-SQL)
+    SELECT
+      a.company, a.num
+    FROM
+      routes a
+    JOIN
+      routes b ON (a.num = b.num AND a.company = b.company)
+    JOIN
+      stops stopsa ON a.stop_id = stopsa.id
+    JOIN
+      stops stopsb ON b.stop_id = stopsb.id
+    WHERE
+      stopsa.name = 'Craiglockhart' AND stopsb.name = 'Tollcross'
   SQL
 end
 
@@ -180,6 +199,18 @@ def start_at_craiglockhart
   # by taking one bus, including 'Craiglockhart' itself. Include the stop name,
   # as well as the company and bus no. of the relevant service.
   execute(<<-SQL)
+    SELECT DISTINCT
+      stopsa.name, a.company, a.num
+    FROM
+      routes a
+    JOIN
+      routes b ON (a.num = b.num AND a.company = b.company)
+    JOIN
+      stops stopsa ON a.stop_id = stopsa.id
+    JOIN
+      stops stopsb ON b.stop_id = stopsb.id
+    WHERE
+      stopsb.name = 'Craiglockhart' OR stopsa.name = 'Craiglockhart'
   SQL
 end
 
@@ -188,5 +219,15 @@ def craiglockhart_to_sighthill
   # Sighthill. Show the bus no. and company for the first bus, the name of the
   # stop for the transfer, and the bus no. and company for the second bus.
   execute(<<-SQL)
+    SELECT
+      a.bus, a.company, stop_id, b.num, b.company
+    FROM
+      routes a
+    JOIN
+      routes b ON (a.num = b.num AND )
+    JOIN
+      stops stopsa ON a.stop_id = stopsa.id
+    JOIN
+      stops stopsb ON b.stop_id = stopsb.id
   SQL
 end
