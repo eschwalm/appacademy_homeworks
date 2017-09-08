@@ -57,8 +57,21 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- your code here!
 
   const addPhoto = (e) => {
+    e.preventDefault();
+    
+    const input = document.querySelector('.photo-url-input');
+    const photoUrl = input.value;
+    input.value = "";
+
     const ul = document.getElementsByClassName('dog-photos');
-    const input = e.currentTarget
+
+    const img = document.createElement('img')
+    img.src = photoUrl;
+
+    const li = document.createElement('li');
+    li.appendChild(img)
+
+    ul.appendChild(li)
   };
 
   const photoSubmit = document.querySelector('photo-url-submit');
